@@ -13,7 +13,7 @@ const loginService = async (email: string, password: string) => {
     where: { email },
   }) as unknown as userType;
 
-  if (bycrypt.compareSync(password, user?.password)) {
+  if (await bycrypt.compare(password, user?.password)) {
     return { statusCode: 200, message: { token: generateToken(user?.id) } };
   }
 

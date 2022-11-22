@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as validator from 'email-validator';
+import * as EmailValidator from 'email-validator';
 
 const emailValidate = async (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
@@ -8,9 +8,10 @@ const emailValidate = async (req: Request, res: Response, next: NextFunction) =>
     return res.status(400).json({ message: 'All fields must be filled' });
   }
 
-  if (validator.validate(email)) {
-    res.status(401).json({ message: 'Incorrect email or password' });
+  if (!EmailValidator.validate(email)) {
+    return res.status(401).json({ message: 'Incorrect email or password' });
   }
+
   next();
 };
 
