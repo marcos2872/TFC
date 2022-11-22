@@ -7,8 +7,7 @@ services:
     platform: linux/x86_64
     working_dir: /app-frontend
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     # Os `healthcheck` devem garantir que a aplicação
     # está operacional, antes de liberar o container
     healthcheck:
@@ -22,6 +21,7 @@ services:
       - 3001:3001
     platform: linux/x86_64
     working_dir: /app-backend
+    # command: dev
     depends_on:
       db:
         condition: service_healthy

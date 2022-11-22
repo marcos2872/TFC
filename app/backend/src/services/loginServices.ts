@@ -1,6 +1,6 @@
 import * as bycrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken';
-import LoginModel from '../database/models/loginModel';
+import LoginModel from '../database/models/Users';
 
 type userType = {
   email: string,

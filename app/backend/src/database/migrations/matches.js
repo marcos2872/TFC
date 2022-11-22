@@ -1,7 +1,5 @@
-const { DataTypes } = require("sequelize");
-
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('matches', {
       id: {
         allowNull: false,
@@ -11,28 +9,27 @@ module.exports = {
       },
       home_team: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       home_team_goals: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       away_team: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       away_team_goals: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       in_progress: {
         allowNull: false,
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
       },
     });
   },
-
-  async down(queryInterface) {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('matches');
   },
 };

@@ -1,13 +1,15 @@
 import { Model, STRING, INTEGER } from 'sequelize';
 import db from '.';
 
-class LoginModel extends Model {
+class Users extends Model {
   declare id: number;
   declare username: string;
+  declare role: string;
+  declare email: string;
   declare password: string;
 }
 
-LoginModel.init({
+Users.init({
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -31,10 +33,8 @@ LoginModel.init({
     type: STRING,
   },
 }, {
-  underscored: true,
   sequelize: db,
   modelName: 'users',
-  freezeTableName: true,
   timestamps: false,
 });
 
@@ -49,4 +49,4 @@ LoginModel.init({
 // Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
 // Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
 
-export default LoginModel;
+export default Users;
