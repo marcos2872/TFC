@@ -1,5 +1,8 @@
 FROM node:16.14-alpine
 WORKDIR /app-backend
-COPY . .
+COPY package* ./
+# COPY . .
 RUN npm install
-ENTRYPOINT ["npm", "run", "prestart"]
+COPY . .
+RUN npm run build
+CMD ["npm", "run", "dev"]
