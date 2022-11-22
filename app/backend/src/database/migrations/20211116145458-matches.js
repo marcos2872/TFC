@@ -9,23 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      homeTeam: {
+      home_team: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      homeTeamGoals: {
+      home_team_goals: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      awayTeam: {
+      away_team: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      awayTeamGoals: {
+      away_team_goals: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      inProgress: {
+      in_progress: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
       },
