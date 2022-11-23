@@ -28,6 +28,7 @@ const loginService = async (email: string, password: string) => {
 
 const loginValidateSrvices = async (token: string) => {
   const id = tokenResolve(token);
+
   const user = await LoginModel.findOne({
     where: { id },
   }) as unknown as userType;
