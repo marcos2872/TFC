@@ -19,11 +19,19 @@ type resultType = {
     message: string
   }
 }
-describe('Teste Login', () => {
+describe('Seção 2: Times', () => {
 
   it('testa retorno de todos os times', async() => {
 
-    const result = await request(app).get("/teams").expect(200, mockTeams)
+    await request(app).get("/teams").expect(200, mockTeams)
+  });
+
+  it('testa retorno de time por id', async() => {
+
+    await request(app).get("/teams/5").expect(200, {
+      id: 5,
+      teamName: "Cruzeiro"
+    })
   });
 
 })

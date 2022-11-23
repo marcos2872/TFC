@@ -6,4 +6,12 @@ const getAllTeamsServices = async () => {
   return { statusCode: 200, message: teams };
 };
 
-export default getAllTeamsServices;
+const getIdTeamsServices = async (id: number) => {
+  const team = await Teams.findOne({
+    where: { id },
+  });
+
+  return { statusCode: 200, message: team?.dataValues };
+};
+
+export { getAllTeamsServices, getIdTeamsServices };
