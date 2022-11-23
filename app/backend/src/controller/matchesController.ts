@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { getAllMatchesServices, getFilterMatchesServices } from '../services/matchesServices';
+import {
+  getAllMatchesServices,
+  getFilterMatchesServices,
+  postMatcheServices } from '../services/matchesServices';
 
 const getAllMatchesController = async (req: Request, res: Response) => {
   const { inProgress } = req.query;
@@ -15,4 +18,13 @@ const getAllMatchesController = async (req: Request, res: Response) => {
   return res.status(statusCode).json(message);
 };
 
-export default getAllMatchesController;
+const postMatchesController = async (req: Request, res: Response) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+
+  const { statusCode, message } = await
+  postMatcheServices(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
+
+  res.status(statusCode).json(message);
+};
+
+export { getAllMatchesController, postMatchesController };

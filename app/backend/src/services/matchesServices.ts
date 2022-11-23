@@ -27,4 +27,20 @@ const getFilterMatchesServices = async (matches: boolean) => {
   return { statusCode: 200, message: filter };
 };
 
-export { getAllMatchesServices, getFilterMatchesServices };
+const postMatcheServices = async (
+  homeTeam: string,
+  awayTeam: string,
+  homeTeamGoals: string,
+  awayTeamGoals: string,
+) => {
+  const matches = await Matches.create({
+    homeTeam,
+    awayTeam,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true });
+
+  return { statusCode: 201, message: matches.dataValues };
+};
+
+export { getAllMatchesServices, getFilterMatchesServices, postMatcheServices };
