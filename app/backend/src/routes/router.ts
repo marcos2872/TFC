@@ -3,6 +3,7 @@ import { getAllTeamsController, getIdTeamsController } from '../controller/teams
 import { emailValidate, paswdValidate } from '../middlewares/loginValidate';
 import { loginController, loginValidateController } from '../controller/loginController';
 import tokenValidate from '../middlewares/tokenValidate';
+import getAllMatchesController from '../controller/matchesController';
 
 const route = express.Router();
 
@@ -11,5 +12,7 @@ route.get('/login/validate', tokenValidate, loginValidateController);
 
 route.get('/teams', getAllTeamsController);
 route.get('/teams/:id', getIdTeamsController);
+
+route.get('/matches', getAllMatchesController);
 
 export default route;
