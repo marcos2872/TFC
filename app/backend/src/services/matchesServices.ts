@@ -1,7 +1,7 @@
 import Matches from '../database/models/Matches';
 import { getIdTeamsServices } from './teamsServices';
 
-const getAllMatchesServices = async () => {
+const getAll = async () => {
   const matches = await Matches.findAll();
 
   const junt = Promise.all(matches.map(async ({ dataValues }) => {
@@ -17,8 +17,14 @@ const getAllMatchesServices = async () => {
       },
     };
   }));
-
-  return { statusCode: 200, message: await junt };
+  return junt;
 };
 
-export default getAllMatchesServices;
+const getAllMatchesServices = async () => ({ statusCode: 200, message: await getAll() });
+
+const getFilterMatchesServices = async (matches: boolean) => {
+  const filter = (await getAll()).filter(({ inProgress }) => inProgress === matches);
+  return { statusCode: 200, message: filter };
+};
+
+export { getAllMatchesServices, getFilterMatchesServices };

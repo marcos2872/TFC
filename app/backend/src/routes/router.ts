@@ -7,6 +7,8 @@ import getAllMatchesController from '../controller/matchesController';
 
 const route = express.Router();
 
+// route.get('/matches/search', getFilterMatchesController);
+
 route.post('/login', emailValidate, paswdValidate, loginController);
 route.get('/login/validate', tokenValidate, loginValidateController);
 
