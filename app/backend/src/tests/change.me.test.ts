@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import App from '../app';
-import Example from '../database/models/ExampleModel';
+import loginController from '../controller/loginController';
 
 import { Response } from 'superagent';
 
@@ -42,6 +42,10 @@ describe('Seu teste', () => {
   // });
 
   it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+    // const res = {};
+    // const req = { body: { email: 'teste',password: '123456'} }
+
+    // res.status = sinon.stub().returns(res)
+    // res.json = sinon.stub().returns()
   });
 });

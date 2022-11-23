@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import loginService from '../services/loginServices';
+import { loginService, loginValidateSrvices } from '../services/loginServices';
 
 const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -9,4 +9,12 @@ const loginController = async (req: Request, res: Response) => {
   res.status(statusCode).json(message);
 };
 
-export default loginController;
+const loginValidateController = async (req: Request, res: Response) => {
+  const token = req.header('authorization') as string;
+
+  const { statusCode, message } = await loginValidateSrvices(token);
+
+  res.status(statusCode).json(message);
+};
+
+export { loginController, loginValidateController };
