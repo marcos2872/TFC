@@ -13,7 +13,7 @@ const tokenValidate = (req: Request, res: Response, next: NextFunction) => {
 
   if (!isValid) {
     return res.status(401).json({
-      message: 'Invalid token',
+      message: 'Token must be a valid token',
     });
   }
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {
   getAllMatchesServices,
   getFilterMatchesServices,
+  patchMatcherFinishServices,
   postMatcheServices } from '../services/matchesServices';
 
 const getAllMatchesController = async (req: Request, res: Response) => {
@@ -27,4 +28,12 @@ const postMatchesController = async (req: Request, res: Response) => {
   res.status(statusCode).json(message);
 };
 
-export { getAllMatchesController, postMatchesController };
+const patchMatcherFinishController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const { statusCode, message } = await patchMatcherFinishServices(Number(id));
+
+  res.status(statusCode).json(message);
+};
+
+export { getAllMatchesController, postMatchesController, patchMatcherFinishController };

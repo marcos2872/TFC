@@ -3,7 +3,9 @@ import { getAllTeamsController, getIdTeamsController } from '../controller/teams
 import { emailValidate, paswdValidate } from '../middlewares/loginValidate';
 import { loginController, loginValidateController } from '../controller/loginController';
 import tokenValidate from '../middlewares/tokenValidate';
-import { getAllMatchesController, postMatchesController } from '../controller/matchesController';
+import { getAllMatchesController,
+  patchMatcherFinishController,
+  postMatchesController } from '../controller/matchesController';
 
 const route = express.Router();
 
@@ -14,6 +16,7 @@ route.get('/teams', getAllTeamsController);
 route.get('/teams/:id', getIdTeamsController);
 
 route.get('/matches', getAllMatchesController);
-route.post('/matches', postMatchesController);
+route.post('/matches', tokenValidate, postMatchesController);
+route.patch('/matches/:id/finish', patchMatcherFinishController);
 
 export default route;

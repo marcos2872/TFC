@@ -1,6 +1,8 @@
 import Matches from '../database/models/Matches';
 import { getIdTeamsServices } from './teamsServices';
 
+import Teams from '../database/models/Teams';
+
 const getAll = async () => {
   const matches = await Matches.findAll();
 
@@ -27,20 +29,41 @@ const getFilterMatchesServices = async (matches: boolean) => {
   return { statusCode: 200, message: filter };
 };
 
+const idValidade = async (id: number) => {
+  const team = await Teams.findOne({ where: { id } });
+  return team;
+};
+
 const postMatcheServices = async (
-  homeTeam: string,
-  awayTeam: string,
-  homeTeamGoals: string,
-  awayTeamGoals: string,
+  homeTeam: number,
+  awayTeam: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number,
 ) => {
-  const matches = await Matches.create({
-    homeTeam,
-    awayTeam,
-    homeTeamGoals,
-    awayTeamGoals,
-    inProgress: true });
+  if (homeTeam === awayTeam) {
+    return { statusCode: 422,
+      message: { message: 'It is not possible to create a match with two equal teams' } };
+  }
+
+  if (!await idValidade(homeTeam) || !await idValidade(awayTeam)) {
+    return { statusCode: 404, message: { message: 'There is no team with such id!' } };
+  }
+
+  const matches = await Matches
+    .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true });
 
   return { statusCode: 201, message: matches.dataValues };
 };
 
-export { getAllMatchesServices, getFilterMatchesServices, postMatcheServices };
+const patchMatcherFinishServices = async (id: number) => {
+  try {
+    await Matches.update({ inProgress: false }, { where: { id } });
+
+    return { statusCode: 200, message: { message: 'Finished' } };
+  } catch (error) {
+    return { statusCode: 404, message: { message: 'There is no team with such id!' } };
+  }
+};
+
+export { getAllMatchesServices,
+  getFilterMatchesServices, postMatcheServices, patchMatcherFinishServices };
