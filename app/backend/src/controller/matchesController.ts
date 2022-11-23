@@ -3,7 +3,8 @@ import {
   getAllMatchesServices,
   getFilterMatchesServices,
   patchMatcherFinishServices,
-  postMatcheServices } from '../services/matchesServices';
+  postMatcheServices,
+  updateMatchesIdServices } from '../services/matchesServices';
 
 const getAllMatchesController = async (req: Request, res: Response) => {
   const { inProgress } = req.query;
@@ -36,4 +37,13 @@ const patchMatcherFinishController = async (req: Request, res: Response) => {
   res.status(statusCode).json(message);
 };
 
-export { getAllMatchesController, postMatchesController, patchMatcherFinishController };
+const updateMatchesIdController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const { satatusCode, message } = await
+  updateMatchesIdServices(Number(id), homeTeamGoals, awayTeamGoals);
+
+  res.status(satatusCode).json(message);
+};
+export { getAllMatchesController,
+  postMatchesController, patchMatcherFinishController, updateMatchesIdController };

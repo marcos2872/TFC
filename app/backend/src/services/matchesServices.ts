@@ -65,5 +65,19 @@ const patchMatcherFinishServices = async (id: number) => {
   }
 };
 
+const updateMatchesIdServices = async (
+  id: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+) => {
+  try {
+    await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+    return { satatusCode: 200, message: { message: 'success' } };
+  } catch (error) {
+    return { satatusCode: 400, message: { message: 'error' } };
+  }
+};
+
 export { getAllMatchesServices,
-  getFilterMatchesServices, postMatcheServices, patchMatcherFinishServices };
+  getFilterMatchesServices,
+  postMatcheServices, patchMatcherFinishServices, updateMatchesIdServices };

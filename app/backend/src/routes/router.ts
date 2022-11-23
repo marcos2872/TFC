@@ -5,7 +5,8 @@ import { loginController, loginValidateController } from '../controller/loginCon
 import tokenValidate from '../middlewares/tokenValidate';
 import { getAllMatchesController,
   patchMatcherFinishController,
-  postMatchesController } from '../controller/matchesController';
+  postMatchesController,
+  updateMatchesIdController } from '../controller/matchesController';
 
 const route = express.Router();
 
@@ -18,5 +19,6 @@ route.get('/teams/:id', getIdTeamsController);
 route.get('/matches', getAllMatchesController);
 route.post('/matches', tokenValidate, postMatchesController);
 route.patch('/matches/:id/finish', patchMatcherFinishController);
+route.patch('/matches/:id', updateMatchesIdController);
 
 export default route;
