@@ -20,7 +20,7 @@ type resultType = {
     message: string
   }
 }
-describe('Teste Login', () => {
+describe('Seção 1: Users e Login', () => {
 
   it('testa server', async() => {
     type resultTypeget = {

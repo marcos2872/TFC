@@ -19,18 +19,20 @@ type resultType = {
     message: string
   }
 }
-describe('Seção 2: Times', () => {
+describe('Seção 3: Partidas', () => {
 
   it('testa retorno de todos os times', async() => {
 
     await request(app).get("/matches").expect(200, mockMatchess)
   });
 
-  // it('testa retorno de time por id', async() => {
+  it('testa filtro inProgress true', async() => {
+    const filter = mockMatchess.filter(({inProgress}) => inProgress === true)
+    await request(app).get("/matches?inProgress=true").expect(200, filter)
+  });
 
-  //   await request(app).get("/teams/5").expect(200, {
-  //     id: 5,
-  //     teamName: "Cruzeiro"
-  //   })
-  // });
+  it('testa filtro inProgress false', async() => {
+    const filter = mockMatchess.filter(({inProgress}) => inProgress === false)
+    await request(app).get("/matches?inProgress=false").expect(200, filter)
+  });
 })
