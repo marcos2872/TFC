@@ -58,42 +58,7 @@ const infoTeam = (teams: teamsType[], matches: matchesType[]) => {
           teamInf.totalLosses += 1;
         }
       }
-      if (curr.id === curr2.awayTeam) {
-        teamInf.goalsFavor += curr2.awayTeam;
-        teamInf.goalsOwn += curr2.homeTeam;
-        teamInf.totalGames += 1;
-        if (curr2.awayTeamGoals < curr2.homeTeamGoals) {
-          teamInf.totalLosses += 1;
-        }
-        if (curr2.awayTeamGoals === curr2.homeTeamGoals) {
-          teamInf.totalPoints += 1;
-          teamInf.totalDraws += 1;
-        }
-        if (curr2.awayTeamGoals > curr2.homeTeamGoals) {
-          teamInf.totalPoints += 3;
-          teamInf.totalVictories += 1;
-        }
-      }
     });
-
-    // matches.forEach((curr2) => {
-    //   if (curr.id === curr2.awayTeam) {
-    //     teamInf.goalsFavor += curr2.awayTeam;
-    //     teamInf.goalsOwn += curr2.homeTeam;
-    //     teamInf.totalGames += 1;
-    //     if (curr2.awayTeamGoals < curr2.homeTeamGoals) {
-    //       teamInf.totalLosses += 1;
-    //     }
-    //     if (curr2.awayTeamGoals === curr2.homeTeamGoals) {
-    //       teamInf.totalPoints += 1;
-    //       teamInf.totalDraws += 1;
-    //     }
-    //     if (curr2.awayTeamGoals > curr2.homeTeamGoals) {
-    //       teamInf.totalPoints += 3;
-    //       teamInf.totalVictories += 1;
-    //     }
-    //   }
-    // });
     return [...acc, teamInf];
   }, []);
 
@@ -108,12 +73,19 @@ const getAllLeaderboardServices = async () => {
   const { message: teamsData } = await getAllTeamsServices();
   const teams = teamsData.map(({ dataValues }) => dataValues);
   const matches = await getAll();
+  const matchesFinish = matches.filter(({ inProgress }) => inProgress === false);
 
-  const teamsInfo = infoTeam(teams, matches);
+  const teamsInfo = infoTeam(teams, matchesFinish);
 
   const teste = teamsInfo.sort((a, b) => {
-    if (a.totalPoints < b.totalPoints) return -1;
-    if (a.totalPoints > b.totalPoints) return 1;
+    if (a.totalPoints < b.totalPoints) return 1;
+    if (a.totalPoints > b.totalPoints) return -1;
+    if (a.goalsBalance < b.goalsBalance) return 1;
+    if (a.goalsBalance > b.goalsBalance) return -1;
+    if (a.goalsFavor < b.goalsFavor) return 1;
+    if (a.goalsFavor > b.goalsFavor) return -1;
+    if (a.goalsOwn < b.goalsOwn) return 1;
+    if (a.goalsOwn > b.goalsOwn) return -1;
     return 0;
   });
 
