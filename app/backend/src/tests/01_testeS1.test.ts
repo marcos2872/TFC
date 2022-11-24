@@ -102,7 +102,6 @@ describe('Seção 1: Users e Login', () => {
     request(app).post("/login").set(head).expect(200, { "role": "admin" });
   });
 
-
   it('rota login validate token invalido', async() => {
     const head = {
       Authorization: 'jwqreiufbhuiqrbfpiwfuiqgi3pf'

@@ -1,4 +1,5 @@
 import * as express from 'express';
+import getAllLeaderboardController from '../controller/leaderboardController';
 import { getAllTeamsController, getIdTeamsController } from '../controller/teamsController';
 import { emailValidate, paswdValidate } from '../middlewares/loginValidate';
 import { loginController, loginValidateController } from '../controller/loginController';
@@ -20,5 +21,7 @@ route.get('/matches', getAllMatchesController);
 route.post('/matches', tokenValidate, postMatchesController);
 route.patch('/matches/:id/finish', patchMatcherFinishController);
 route.patch('/matches/:id', updateMatchesIdController);
+
+route.get('/leaderboard/home', getAllLeaderboardController);
 
 export default route;
