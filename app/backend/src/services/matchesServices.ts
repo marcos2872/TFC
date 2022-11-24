@@ -70,12 +70,12 @@ const updateMatchesIdServices = async (
   homeTeamGoals: number,
   awayTeamGoals: number,
 ) => {
-  try {
-    await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
-    return { satatusCode: 200, message: { message: 'success' } };
-  } catch (error) {
-    return { satatusCode: 400, message: { message: 'error' } };
-  }
+  // try {
+  await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  return { satatusCode: 200, message: { message: 'success' } };
+  // } catch (error) {
+  //   return { satatusCode: 400, message: { message: 'error' } };
+  // }
 };
 
 export { getAllMatchesServices,

@@ -7,6 +7,7 @@ import chaiHttp = require('chai-http');
 import App from '../app';
 
 import { Response } from 'superagent';
+import generateToken from '../utils/generateToken';
 
 chai.use(chaiHttp);
 
@@ -81,6 +82,26 @@ describe('Seção 1: Users e Login', () => {
     expect(result.statusCode).equal(401);
     expect(result.body.message).equal("Incorrect email or password");
   });
+
+  it('testa tentar fazer login correto', async() => {
+    const loginSempaswd = {
+      email: 'admin@admin.com',
+      password: 'secret_admin'
+    }
+
+    request(app).post("/login").send(loginSempaswd).expect(200);
+  });
+
+  it('retornará o tipo de usuário.', async() => {
+    const token = generateToken(1)
+
+    const head = {
+      Authorization: token
+    }
+
+    request(app).post("/login").set(head).expect(200, { "role": "admin" });
+  });
+
 
   it('rota login validate token invalido', async() => {
     const head = {
