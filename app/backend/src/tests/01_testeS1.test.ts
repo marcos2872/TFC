@@ -87,10 +87,9 @@ describe('Seção 1: Users e Login', () => {
       Authorization: 'jwqreiufbhuiqrbfpiwfuiqgi3pf'
     }
 
-    const result = await request(app).get("/login/validate").set(head) as unknown as resultType;
-
-    expect(result.statusCode).equal(401);
-    expect(result.body.message).equal("Invalid token");
+    const result = await request(app).get("/login/validate").set(head).expect(401, {
+      message: 'Token must be a valid token',
+    }) 
   });
 
   it('rota login validate sem token', async() => {

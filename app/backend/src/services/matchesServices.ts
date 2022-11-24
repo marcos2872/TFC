@@ -80,4 +80,4 @@ const updateMatchesIdServices = async (
 
 export { getAllMatchesServices,
   getFilterMatchesServices,
-  postMatcheServices, patchMatcherFinishServices, updateMatchesIdServices };
+  postMatcheServices, patchMatcherFinishServices, updateMatchesIdServices, getAll };

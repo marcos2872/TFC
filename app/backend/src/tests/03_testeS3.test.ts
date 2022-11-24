@@ -7,7 +7,8 @@ import chaiHttp = require('chai-http');
 import App from '../app';
 
 import { Response } from 'superagent';
-import mockMatchess from './mock/matchesMockes';
+import { getAll } from '../services/matchesServices';
+// import mockMatchess from './mock/matchesMockes';
 
 chai.use(chaiHttp);
 const { app } = new App();
@@ -19,7 +20,9 @@ type resultType = {
     message: string
   }
 }
-describe('Seção 3: Partidas', () => {
+describe('Seção 3: Partidas', async() => {
+
+  const mockMatchess = await getAll()
 
   it('testa retorno de todos os times', async() => {
 
