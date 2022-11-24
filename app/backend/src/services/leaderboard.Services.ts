@@ -1,5 +1,5 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable max-lines-per-function */
+// /* eslint-disable sonarjs/cognitive-complexity */
+// /* eslint-disable max-lines-per-function */
 import { getAll } from './matchesServices';
 import { getAllTeamsServices } from './teamsServices';
 
@@ -27,38 +27,43 @@ type accType = {
   efficiency: number
 };
 
+const teamRef = {
+  name: '',
+  totalPoints: 0,
+  totalGames: 0,
+  totalVictories: 0,
+  totalDraws: 0,
+  totalLosses: 0,
+  goalsFavor: 0,
+  goalsOwn: 0,
+  goalsBalance: 0,
+  efficiency: 0 };
+
+const forE = (matches: matchesType[], curr: teamsType) => {
+  const teamInf = { ...teamRef };
+  matches.forEach((curr2) => {
+    if (curr.id === curr2.homeTeam) {
+      teamInf.name = curr.teamName; teamInf.goalsFavor += curr2.homeTeamGoals;
+      teamInf.goalsOwn += curr2.awayTeamGoals; teamInf.totalGames += 1;
+
+      if (curr2.awayTeamGoals < curr2.homeTeamGoals) {
+        teamInf.totalPoints += 3; teamInf.totalVictories += 1;
+      }
+
+      if (curr2.awayTeamGoals === curr2.homeTeamGoals) {
+        teamInf.totalPoints += 1; teamInf.totalDraws += 1;
+      }
+
+      if (curr2.awayTeamGoals > curr2.homeTeamGoals) teamInf.totalLosses += 1;
+    }
+  });
+  return teamInf;
+};
+
 const infoTeam = (teams: teamsType[], matches: matchesType[]) => {
   const teste = teams.reduce((acc: accType[], curr) => {
-    const teamInf = {
-      name: '',
-      totalPoints: 0,
-      totalGames: 0,
-      totalVictories: 0,
-      totalDraws: 0,
-      totalLosses: 0,
-      goalsFavor: 0,
-      goalsOwn: 0,
-      goalsBalance: 0,
-      efficiency: 0 };
-    matches.forEach((curr2) => {
-      if (curr.id === curr2.homeTeam) {
-        teamInf.name = curr.teamName;
-        teamInf.goalsFavor += curr2.homeTeamGoals;
-        teamInf.goalsOwn += curr2.awayTeamGoals;
-        teamInf.totalGames += 1;
-        if (curr2.awayTeamGoals < curr2.homeTeamGoals) {
-          teamInf.totalPoints += 3;
-          teamInf.totalVictories += 1;
-        }
-        if (curr2.awayTeamGoals === curr2.homeTeamGoals) {
-          teamInf.totalPoints += 1;
-          teamInf.totalDraws += 1;
-        }
-        if (curr2.awayTeamGoals > curr2.homeTeamGoals) {
-          teamInf.totalLosses += 1;
-        }
-      }
-    });
+    const teamInf = forE(matches, curr);
+
     return [...acc, teamInf];
   }, []);
 
