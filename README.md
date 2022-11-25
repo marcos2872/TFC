@@ -3,7 +3,9 @@
 #Esse projeto foi desenvolvido na Trybe.
 
 <details>
-O TFC é um site informativo sobre partidas e classificações de futebol! 
+O TFC é um site informativo sobre partidas e classificações de futebol!
+
+OBS: front-end desenvolvido pela trybe
 
 Foi desenvolvido uma API (utilizando o método TDD) e também integrar - através do docker-compose - as aplicações para que elas funcionem consumindo um banco de dados.
 
