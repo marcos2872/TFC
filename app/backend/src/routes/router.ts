@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getAllLeaderboardController,
+import { getAllLeaderboardController, getAllLeaderboardControllerHome,
   leaderboardControllerAway } from '../controller/leaderboardController';
 import { getAllTeamsController, getIdTeamsController } from '../controller/teamsController';
 import { emailValidate, paswdValidate } from '../middlewares/loginValidate';
@@ -23,7 +23,9 @@ route.post('/matches', tokenValidate, postMatchesController);
 route.patch('/matches/:id/finish', patchMatcherFinishController);
 route.patch('/matches/:id', updateMatchesIdController);
 
-route.get('/leaderboard/home', getAllLeaderboardController);
+route.get('/leaderboard/home', getAllLeaderboardControllerHome);
 route.get('/leaderboard/away', leaderboardControllerAway);
+
+route.get('/leaderboard', getAllLeaderboardController);
 
 export default route;
