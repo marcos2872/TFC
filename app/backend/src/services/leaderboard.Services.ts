@@ -1,5 +1,3 @@
-// /* eslint-disable sonarjs/cognitive-complexity */
-// /* eslint-disable max-lines-per-function */
 import { getAll } from './matchesServices';
 import { getAllTeamsServices } from './teamsServices';
 
@@ -39,7 +37,7 @@ const teamRef = {
   goalsBalance: 0,
   efficiency: 0 };
 
-const forE = (matches: matchesType[], curr: teamsType) => {
+const forHome = (matches: matchesType[], curr: teamsType) => {
   const teamInf = { ...teamRef };
   matches.forEach((curr2) => {
     if (curr.id === curr2.homeTeam) {
@@ -60,9 +58,30 @@ const forE = (matches: matchesType[], curr: teamsType) => {
   return teamInf;
 };
 
-const infoTeam = (teams: teamsType[], matches: matchesType[]) => {
+const forAway = (matches: matchesType[], curr: teamsType) => {
+  const teamInf = { ...teamRef };
+  matches.forEach((curr2) => {
+    if (curr.id === curr2.awayTeam) {
+      teamInf.name = curr.teamName; teamInf.goalsFavor += curr2.awayTeamGoals;
+      teamInf.goalsOwn += curr2.homeTeamGoals; teamInf.totalGames += 1;
+
+      if (curr2.awayTeamGoals > curr2.homeTeamGoals) {
+        teamInf.totalPoints += 3; teamInf.totalVictories += 1;
+      }
+
+      if (curr2.awayTeamGoals === curr2.homeTeamGoals) {
+        teamInf.totalPoints += 1; teamInf.totalDraws += 1;
+      }
+
+      if (curr2.awayTeamGoals < curr2.homeTeamGoals) teamInf.totalLosses += 1;
+    }
+  });
+  return teamInf;
+};
+
+const infoTeam = (teams: teamsType[], matches: matchesType[], local: string) => {
   const teste = teams.reduce((acc: accType[], curr) => {
-    const teamInf = forE(matches, curr);
+    const teamInf = local === 'home' ? forHome(matches, curr) : forAway(matches, curr);
 
     return [...acc, teamInf];
   }, []);
@@ -74,13 +93,13 @@ const infoTeam = (teams: teamsType[], matches: matchesType[]) => {
   }));
 };
 
-const getAllLeaderboardServices = async () => {
+const getAllLeaderboardServices = async (local: string) => {
   const { message: teamsData } = await getAllTeamsServices();
   const teams = teamsData.map(({ dataValues }) => dataValues);
   const matches = await getAll();
   const matchesFinish = matches.filter(({ inProgress }) => inProgress === false);
 
-  const teamsInfo = infoTeam(teams, matchesFinish);
+  const teamsInfo = infoTeam(teams, matchesFinish, local);
 
   const teste = teamsInfo.sort((a, b) => {
     if (a.totalPoints < b.totalPoints) return 1;
@@ -96,4 +115,12 @@ const getAllLeaderboardServices = async () => {
 
   return { statusCode: 200, message: teste };
 };
-export default getAllLeaderboardServices;
+
+const leaderboardServicesAway = async (local: string) => {
+  const { message } = await getAllLeaderboardServices(local);
+
+  const filt = message;
+  return { statusCode: 200, message: filt };
+};
+
+export { getAllLeaderboardServices, leaderboardServicesAway };
